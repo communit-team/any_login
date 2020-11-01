@@ -17,13 +17,8 @@ module AnyLogin
       end
 
       def any_login_select
-        collection = AnyLogin.collection
-        select_options =
-                        if collection.grouped?
-                          grouped_options_for_select(collection.to_a)
-                        else
-                          options_for_select(collection.to_a)
-                        end
+        collection = current_account.business_profile.accounts.all.pluck(:email, :id)
+        select_options = options_for_select(collection.to_a)
         select_tag :selected_id, select_options, select_html_options
       end
 
